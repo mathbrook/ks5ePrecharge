@@ -160,8 +160,8 @@ void standby() {
   digitalWrite(SHUTDOWN_CTRL_PIN, LOW);
 
   // Check for stable shutdown circuit
-  const unsigned int WAIT_TIME = 50; // ms to wait for stable voltage
-  if ((SDC_Average.value() >= MIN_SDC_VOLTAGE) && vcuSignal){
+  const unsigned int WAIT_TIME = 100; // ms to wait for stable voltage
+  if ((SDC_Average.value() >= MIN_SDC_VOLTAGE)/* && vcuSignal*/){
     if (millis() > epoch + WAIT_TIME){
       state = STATE_PRECHARGE;
       vcuSignal=false;
@@ -176,13 +176,13 @@ void standby() {
 // Trip error if charge-time looks unusual
 void precharge() {
   // Look for "too fast" or "too slow" precharge, indicates wiring fault
-  const float MIN_EXPECTED = 200; // [ms]. Set this to something reasonable after collecting normal precharge sequence data
-  const float MAX_EXPECTED = 10000; // [ms]. Set this to something reasonable after collecting normal precharge sequence data
+  const float MIN_EXPECTED = 300; // [ms]. Set this to something reasonable after collecting normal precharge sequence data
+  const float MAX_EXPECTED = 1000; // [ms]. Set this to something reasonable after collecting normal precharge sequence data
   // If a precharge is detected faster than this, an error is
   // thrown - assumed wiring fault. This could also arrest oscillating or
   // chattering AIRs, because the TS will retain some amount of precharge.
-  const float TARGET_PERCENT = 95;   // TODO: Requires suitable value during commissioning (eg 95%)
-  const unsigned int SETTLING_TIME = 50; // [ms] Precharge amount must be over TARGET_PERCENT for this long before we consider precharge complete
+  const float TARGET_PERCENT = 92;   // TODO: Requires suitable value during commissioning (eg 95%)
+  const unsigned int SETTLING_TIME = 100; // [ms] Precharge amount must be over TARGET_PERCENT for this long before we consider precharge complete
   static unsigned long epoch;
   static unsigned long tStartPre;
 
