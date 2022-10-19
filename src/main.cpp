@@ -181,8 +181,8 @@ void precharge() {
   // If a precharge is detected faster than this, an error is
   // thrown - assumed wiring fault. This could also arrest oscillating or
   // chattering AIRs, because the TS will retain some amount of precharge.
-  const float TARGET_PERCENT = 92;   // TODO: Requires suitable value during commissioning (eg 95%)
-  const unsigned int SETTLING_TIME = 100; // [ms] Precharge amount must be over TARGET_PERCENT for this long before we consider precharge complete
+  const float TARGET_PERCENT = 90;   // TODO: Requires suitable value during commissioning (eg 95%)
+  const unsigned int SETTLING_TIME = 200; // [ms] Precharge amount must be over TARGET_PERCENT for this long before we consider precharge complete
   static unsigned long epoch;
   static unsigned long tStartPre;
 
